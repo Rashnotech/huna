@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session, Session
 from model.base import Base
 
 
-class DB:
+class DBStorage:
     """A class that represents the database connection"""
 
     __engine = None
@@ -28,10 +28,14 @@ class DB:
         if obj:
             self.__session.delete(obj)
 
+    def empty(self, cls):
+        """empty a table"""
+        cls.drop(self.__engine)
+
     def close(self):
         """close the database connection"""
         self.__session.remove()
-    
+
     def reload(self):
         """reload the database connection"""
         Base.metadata.create_all(self.__engine)

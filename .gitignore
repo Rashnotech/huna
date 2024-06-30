@@ -1,0 +1,4 @@
+__pycache__
+model/__pycache__/
+model/engine/__pycache__
+*.db
