@@ -13,7 +13,7 @@ if products is not None and len(products) > 0:
     for product in products:
         #desc = crawler.selected(product)
         #crawler.download_images(product)
-        print(f'{product.name} -- {product.price}')
+        product.save()
 
 
 """

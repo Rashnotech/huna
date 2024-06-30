@@ -26,3 +26,16 @@ class Product(BaseModel, Base):
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
+
+    def to_dict(self):
+        """Converts the Product instance to a dictionary"""
+        product_dict = super().to_dict()
+        product_dict.update({
+            'name': self.name,
+            'price': self.price,
+            'discount': self.discount,
+            'img_url': self.img_url,
+            'link': self.link,
+            'description': self.description.to_dict() if self.description else None
+        })
+        return product_dict

@@ -14,7 +14,7 @@ class Description(BaseModel, Base):
 
     title = Column(String(100), nullable=False)
     features = Column(Text)
-    product_id = Column(Integer, ForeignKey('products.id'), nullable=False)
+    product_id = Column(String(50), ForeignKey('products.id'), nullable=False)
     product = relationship('Product', back_populates='description',
                            uselist=False)
 

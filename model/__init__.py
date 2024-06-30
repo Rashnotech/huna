@@ -4,4 +4,3 @@ from model.engine.db import DBStorage
 
 
 storage = DBStorage('huna.db')
-storage.reload()

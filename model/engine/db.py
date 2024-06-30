@@ -3,6 +3,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, Session
 from model.base import Base
+from model.products import Product
+from model.desc import Description
+from model.specs import Specification
+from sys import modules
+
+
+classes = {'Product': Product, 'Description': Description,
+           'Specification': Specification}
 
 
 class DBStorage:
@@ -14,6 +22,29 @@ class DBStorage:
     def __init__(self, db_name):
         """initialize the database connection"""
         self.__engine = create_engine(f'sqlite:///{db_name}')
+        self.reload()
+
+    def all(self, cls=None):
+        """
+            Query all object in the current database session.
+            Args:
+                cls (class): The class to query.
+            Return:
+                dict: A dictionary with keys in this format
+                <class-name>.<object-id>
+        """
+        obj_dict = {}
+        if cls:
+            cls = getattr(modules[__name__], cls.__name__)
+            result = self.__session.query(cls).all()
+        else:
+            result = []
+            for class_name in classes:
+                result.extend(self.__session.query(classes[class_name]).all())
+        for obj in result:
+            key = '{}.{}'.format(type(obj).__name__, obj.id)
+            obj_dict[key] = obj
+        return obj_dict
 
     def new(self, obj):
         """add a new object to the database"""
@@ -28,9 +59,14 @@ class DBStorage:
         if obj:
             self.__session.delete(obj)
 
+    def get(self, cls, id):
+        """Retrieve objects from storage"""
+        objs = self.__session.query(cls).filter_by(id=id).first()
+        return objs
+
     def empty(self, cls):
         """empty a table"""
-        cls.drop(self.__engine)
+        cls.__table__.drop(self.__engine)
 
     def close(self):
         """close the database connection"""

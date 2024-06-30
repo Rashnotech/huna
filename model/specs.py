@@ -12,7 +12,7 @@ class Specification(BaseModel, Base):
 
     title = Column(String(100))
     specification = Column(Text, nullable=True)
-    product_id = Column(Integer, ForeignKey('products.id'), nullable=False)
+    product_id = Column(String(50), ForeignKey('products.id'), nullable=False)
     product = relationship('Product', back_populates='specification',
                            uselist=False)
 
