@@ -11,7 +11,7 @@ class Config:
     MAIL_USE_SSL = True
     MAIL_USERNAME = ''
     MAIL_PASSWORD = ''
-    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'upload', 'images')
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'downloaded')
     SECRET_KEY = "think about it"
     JWT_SECRET_KEY = "think about it"
     JWT_TOKEN_LOCATION = ['headers']

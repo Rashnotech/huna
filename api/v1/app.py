@@ -7,6 +7,10 @@ from model import storage
 from api.v1.config import Config
 from api.v1.routes import app_views
 from flask_jwt_extended import JWTManager
+from .worker import job
+import time
+import threading
+import schedule
 
 
 app = Flask(__name__)
@@ -36,5 +40,15 @@ def forbidden(error) -> str:
     """Forbidden error"""
     return jsonify({'error': 'Forbidden'})
 
+def run_scheduler():
+    """scheduler"""
+    schedule.every().day.at("03:00").do(job)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 if __name__ == '__main__':
+    scheduler_thread = threading.Thread(target=run_scheduler)
+    scheduler_thread.daemon = True
+    scheduler_thread.start()
     app.run(debug=True)

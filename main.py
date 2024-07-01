@@ -11,18 +11,8 @@ crawler = Crawler()
 products = crawler.parse('https://www.jumia.com.ng', '')
 if products is not None and len(products) > 0:
     for product in products:
-        #desc = crawler.selected(product)
-        #crawler.download_images(product)
         product.save()
-
-
-"""
-@repeat(every(3).day)
-def job():
-    crawler = Crawler()
-    products = crawler.parse('https://www.jumia.com.ng', '')
-    if len(products) > 0:
-        for product in products:
-            crawler.download_images(product)
-            product.save()
-"""
+        desc, specs = crawler.selected(product)
+        crawler.download_images(product)
+        desc.save()
+        specs.save()

@@ -12,11 +12,9 @@ class Payment(BaseModel, Base):
 
     __tablename__ = 'payments'
 
-    payment_type = Column('type', Enum('one-off', 'recurring'), nullable=False)
-    order_items = Column(String(100), unique=True, ForeignKey())
+    payment_method = Column('type', Enum('one-off', 'recurring'), nullable=False)
+    order_id = Column(String(100), ForeignKey('orders.id'), nullable=False)
     amount = Column(Float, nullable=False)
-    product_id = Column(String(100), unique=True, ForeignKey(),
-                        nullable=False)
 
     def __init__(self, **kwargs) -> None:
         """initialization method"""
