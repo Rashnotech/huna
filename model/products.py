@@ -31,11 +31,8 @@ class Product(BaseModel, Base):
         """Converts the Product instance to a dictionary"""
         product_dict = super().to_dict()
         product_dict.update({
-            'name': self.name,
-            'price': self.price,
-            'discount': self.discount,
-            'img_url': self.img_url,
-            'link': self.link,
-            'description': self.description.to_dict() if self.description else None
+            'description': self.description.to_dict() if self.description else None,
+            'specification': self.specification.to_dict() if self.specification else None
         })
         return product_dict
+
