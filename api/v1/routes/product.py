@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """a module that handles products """
 from model import storage
-from flask import request, abort, jsonify, current_app
+from flask import abort, jsonify, current_app
 from api.v1.routes import app_views
 from model.products import Product
 from model.specs import Specification

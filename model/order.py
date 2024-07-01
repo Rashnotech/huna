@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """a module that handle order"""
 from model.base import Base, BaseModel
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Enum
 
 
 class Order(Base, BaseModel):

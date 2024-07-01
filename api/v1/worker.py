@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """a module that handler background work"""
 from model.crawler import Crawler
+from model import storage
+from model.products import Product
 import asyncio
 
 
 def job():
     """a function that handles job"""
+    empty_storage()
     crawler = Crawler()
     products = crawler.parse('https://www.jumia.com.ng', '')
     if len(products) > 0:
@@ -21,4 +24,4 @@ def job():
 
 def empty_storage():
     """a function that empty product storage"""
-
+    storage.empty(Product)

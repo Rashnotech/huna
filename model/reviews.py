@@ -11,7 +11,7 @@ class Review(Base, BaseModel):
 
     __tablename__ = 'reviews'
 
-    comment = Column(Text, nullabe=False)
+    comment = Column(Text, nullable=False)
     rating = Column(Integer, nullable=False)
     user_id = Column(String(100), ForeignKey('users.id'), nullable=False)
     product_id = Column(String(100), ForeignKey('products.id'), nullable=False)

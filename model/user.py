@@ -2,6 +2,7 @@
 """a module for user of the app"""
 from model.base import Base, BaseModel
 from sqlalchemy import Column, String
+from hashlib import md5
 
 
 class User(Base, BaseModel):
@@ -20,6 +21,6 @@ class User(Base, BaseModel):
         """initialization"""
         super().__init__(**kwargs)
 
-    def password(self, password):
+    def set_password(self, password):
         """set password"""
         self.password = md5(password)

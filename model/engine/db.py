@@ -6,11 +6,17 @@ from model.base import Base
 from model.products import Product
 from model.desc import Description
 from model.specs import Specification
+from model.user import User
+from model.order import Order, Item
+from model.payment import Payment
+from model.reviews import Review
 from sys import modules
 
 
 classes = {'Product': Product, 'Description': Description,
-           'Specification': Specification}
+        'Specification': Specification, 'User': User,
+        'Review': Review, 'Payment': Payment, 'Order': Order, 'Item': Item
+        }
 
 
 class DBStorage:
@@ -61,8 +67,13 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve objects from storage"""
-        objs = self.__session.query(cls).filter_by(id=id).first()
-        return objs
+        obj = self.__session.query(cls).filter_by(id=id).first()
+        return obj
+    
+    def get_email(self, cls, email):
+        """Retrieve objects from storage using email"""
+        obj = self.__session.query(cls).filter_by(email=email).first()
+        return obj
 
     def empty(self, cls):
         """empty a table"""
