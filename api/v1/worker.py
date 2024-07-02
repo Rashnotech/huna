@@ -8,7 +8,6 @@ import asyncio
 
 def job():
     """a function that handles job"""
-    empty_storage()
     crawler = Crawler()
     products = crawler.parse('https://www.jumia.com.ng', '')
     if len(products) > 0:

@@ -77,7 +77,8 @@ class DBStorage:
 
     def empty(self, cls):
         """empty a table"""
-        cls.__table__.drop(self.__engine)
+        self.__sesssion.query(cls).delete()
+        self.save()
 
     def close(self):
         """close the database connection"""
