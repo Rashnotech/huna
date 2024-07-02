@@ -75,6 +75,11 @@ class DBStorage:
         obj = self.__session.query(cls).filter_by(email=email).first()
         return obj
 
+    def get_product(self, cls, prd_id):
+        """Retrieve objects from storage using product_id"""
+        obj = self.__session.query(cls).filter_by(product_id=prd_id).first()
+        return obj
+
     def empty(self, cls):
         """empty a table"""
         self.__sesssion.query(cls).delete()

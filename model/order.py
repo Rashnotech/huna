@@ -19,7 +19,6 @@ class Order(Base, BaseModel):
 
 
 
-
 class Item(Base, BaseModel):
     """a model for ordered items"""
 
