@@ -7,7 +7,9 @@ from urllib.parse import urlparse
 from model.products import Product
 from model.desc import Description
 from model.specs import Specification
+from model.category import Category
 from aiohttp import ClientSession
+from model import storage
 import asyncio
 import re
 import os
@@ -75,7 +77,35 @@ class Crawler:
         except AttributeError:
             return ""
 
-    def parse(self, url, search=''):
+    def categories(self, link: str) -> str:
+        """a method a stores categories"""
+        url = '{}{}'.format(
+                'https://www.jumia.com.ng',
+                urlparse(link).path
+            )
+        bs = self.get(url)
+        category = self.filter(bs, 'a', 'class', 'cbs')
+        name = category[-3].get_text()
+        link = category[-3].attrs['href']
+        catg = storage.find_category(Category, name)
+        if not catg:
+            new_catg = Category(name=name, link=link)
+            new_catg.save()
+            return new_catg.id
+        return catg.id
+        """
+        for category in categories:
+            name = category.find('span', {'class': 'text'}).get_text()
+            link = category.find('a', href=re.compile('^/*.*$')).attrs['href']
+            objs.append(Category(
+                name=name,
+                link=link if link else None)
+                )
+        for obj in objs:
+            obj.save()
+        """
+
+    def parse(self, url: str, search='') -> list:
         """parsing logic based on the site structure"""
         bs = self.get_page(url + search)
         objs = []
@@ -89,12 +119,14 @@ class Crawler:
             image_url = product.find('img', attrs={'data-src':
                                      re.compile('^(https|www)')})
             link = product.find('a', href=re.compile('^/*.*$')).attrs['href']
+            category_id = self.categories(link)
             objs.append(Product(name=prd_name,
                                 price=currency(price),
                                 discount=discount.get_text()
                                 if discount is not None else discount,
                                 img_url=image_url['data-src'],
-                                link=link
+                                link=link,
+                                category_id=category_id
                                 ))
         return objs
 
@@ -118,7 +150,7 @@ class Crawler:
         except Exception as e:
             print(f"Error downloading {product.img_url}: {e}")
 
-    async def download_images_async(self, products):
+    async def download_images_async(self, products: list):
         async with ClientSession(headers=self.headers) as session:
             tasks = []
             for product in products:

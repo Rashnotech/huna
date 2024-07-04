@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """a module that handles products modal"""
 from model.base import Base, BaseModel
-from sqlalchemy import Column, String, Float, Integer
+from sqlalchemy import Column, String, Float, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 
@@ -23,6 +23,7 @@ class Product(BaseModel, Base):
     specification = relationship('Specification', uselist=False,
                                  back_populates='product',
                                  cascade='all, delete-orphan')
+    category_id = Column(String(150), ForeignKey('categories.id'), nullable=False)
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)

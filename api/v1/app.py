@@ -42,7 +42,8 @@ def forbidden(error) -> str:
 
 def run_scheduler():
     """scheduler"""
-    schedule.every().day.at("01:00").do(job)
+    #schedule.every().day.at("01:00").do(job)
+    schedule.every(10).minutes.do(job)
     while True:
         schedule.run_pending()
         time.sleep(1)

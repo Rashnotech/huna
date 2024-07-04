@@ -11,11 +11,12 @@ from model.order import Order, Item
 from model.payment import Payment
 from model.reviews import Review
 from sys import modules
-
+from model.category import Category
 
 classes = {'Product': Product, 'Description': Description,
         'Specification': Specification, 'User': User,
-        'Review': Review, 'Payment': Payment, 'Order': Order, 'Item': Item
+        'Review': Review, 'Payment': Payment, 'Order': Order, 'Item': Item,
+        'Category': Category
         }
 
 
@@ -86,6 +87,11 @@ class DBStorage:
     def get_product(self, cls, prd_id):
         """Retrieve objects from storage using product_id"""
         obj = self.__session.query(cls).filter_by(product_id=prd_id).first()
+        return obj
+
+    def find_category(self, cls, name):
+        """Retrieve object from storage using name"""
+        obj = self.__session.query(cls).filter_by(name=name).first()
         return obj
 
     def empty(self, cls):
