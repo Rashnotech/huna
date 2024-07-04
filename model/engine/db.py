@@ -56,9 +56,17 @@ class DBStorage:
         """add a new object to the database"""
         self.__session.add(obj)
 
+    def rollback(self):
+        """Rollback all changes of the current database session"""
+        self.__session.rollback()
+
     def save(self):
         """save an object to the database"""
-        self.__session.commit()
+        try:
+            self.__session.commit()
+        except:
+            self.rollback()
+            raise
 
     def delete(self, obj=None):
         """delete an object from the database"""

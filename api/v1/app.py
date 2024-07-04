@@ -5,7 +5,7 @@ from flask_mail import Mail
 from flask_cors import CORS
 from model import storage
 from api.v1.config import Config
-from api.v1.routes import app_views
+from api.v1.routes import app_views, jsonify, abort
 from flask_jwt_extended import JWTManager
 from .worker import job
 import time
@@ -42,7 +42,7 @@ def forbidden(error) -> str:
 
 def run_scheduler():
     """scheduler"""
-    schedule.every().day.at("03:00").do(job)
+    schedule.every().day.at("01:00").do(job)
     while True:
         schedule.run_pending()
         time.sleep(1)

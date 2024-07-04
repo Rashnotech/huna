@@ -1,7 +1,23 @@
 #!/usr/bin/python3
 """a module that handle order"""
 from model.base import Base, BaseModel
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Enum
+from sqlalchemy import Column, JSON, String, ForeignKey, Integer, Float, Enum
+from enum import Enum as PythonEnum
+from sqlalchemy.orm import relationship
+
+class OrderEnum(PythonEnum):
+    """enum for order status"""
+    default = 'default'
+    pending = 'pending'
+    processing = 'processing'
+    shipped = 'shipped'
+    in_transit = 'in-transit'
+    delivered = 'delivered'
+    cancelled = 'cancelled'
+    returned = 'returned'
+    refunded = 'refunded'
+    failed = 'failed'
+    complete = 'completed'
 
 
 class Order(Base, BaseModel):
@@ -9,8 +25,9 @@ class Order(Base, BaseModel):
 
     __tablename__ = 'orders'
 
-    status = Column('status', Enum('default', 'pending', 'completed'),
-                    nullable=False)
+    order_id = Column(String(100), ForeignKey('order_items.id'),
+                      nullable=False)
+    status = Column(Enum(OrderEnum, length=20), default=OrderEnum.default)
     user_id = Column(String(100), ForeignKey('users.id'), nullable=False)
 
     def __init__(self, **kwargs):
@@ -24,10 +41,8 @@ class Item(Base, BaseModel):
 
     __tablename__ = 'order_items'
 
-    quantity = Column(Integer, nullable=False)
-    price = Column(Float, nullable=False)
-    order_id = Column(String(100), ForeignKey('orders.id'), nullable=False)
-    product_id = Column(String(100), ForeignKey('products.id'), nullable=False)
+    checkout = Column(JSON)
+    user_id = Column(String(100), ForeignKey('users.id'), nullable=False)
 
     def __init__(self, **kwargs):
         """initialization"""

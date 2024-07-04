@@ -36,12 +36,14 @@ def fetch_review(product_id):
     reviews = storage.get_product(Review, product_id)
     return jsonify({'data': reviews.to_dict()}), 200
 
+
 @app_views.route('/review/<id>', methods=['GET'], strict_slashes=False)
 def delete_review(id):
     """a function that delete a review"""
     review = storage.get(Review, id)
     storage.delete(review)
     return jsonify({'message': 'Review deleted'}), 200
+
 
 @app_views.routes('/review/<id>', methods=['PUT'], strict_slashes=False)
 def updated_review(id):

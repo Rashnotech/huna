@@ -4,6 +4,7 @@ from api.v1.routes import app_views
 from flask import jsonify, request, abort, current_app
 from model import storage
 from os import getenv
+import asyncio
 from flask_mail import Message, Mail
 from model.user import User
 
@@ -19,7 +20,7 @@ def signup():
     for attr, _ in data.keys():
         if attr not in ['username', 'firstname', 'lastname', 'email', 'password']:
             return jsonify({'error': f'Missing {attr}'})
-    email, _ = data
+    email = data.get('email')
     user = storage.get_email(email)
     if user and user.verify == True:
         return jsonify({'error': 'Email already exist'})
@@ -28,7 +29,7 @@ def signup():
         if status == 500:
             return 
         return jsonify({'message': 'Verification email sent'})
-    response, status = send_mail(email, body)
+    response, status = asyncio.run(send_mail(email, body))
     if status == 500:
         abort(400, response)
     new_user = User(**data)
@@ -44,7 +45,7 @@ def signup():
         with mail.connect() as conn:
             msg = Message(
                     subject='HUNA Store Verification',
-                    sender=getenv('email'),
+                    sender=getenv('EMAIL'),
                     recipients=[receiver],
                     html=body)
             try:

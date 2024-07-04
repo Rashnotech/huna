@@ -13,12 +13,12 @@ class BaseModel:
     """A class that represents a base entity with its attributes
         and methods.
     """
-    id = Column(String(50), unique=True, default=lambda: str(uuid4()),
+    id = Column(String(100), unique=True, default=lambda: str(uuid4()),
                 primary_key=True, nullable=False)
     created_at = Column(DateTime, default=datetime.now(timezone.utc),
                         nullable=False)
     updated_at = Column(DateTime, default=datetime.now(timezone.utc),
-                        nullable=False)
+                        onupdate=datetime.now(timezone.utc), nullable=False)
 
     def __init__(self, **kwargs) -> None:
         """initialization method"""

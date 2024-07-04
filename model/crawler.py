@@ -16,7 +16,7 @@ import os
 def rename(product) -> str:
     """utility function for renaming image files
     """
-    rename = product.image_url.split('/')[-1]
+    rename = product.img_url.split('/')[-1]
     code = rename.split('?')[1]
     rename = rename.split('?')[0]
     name = code + rename
@@ -34,6 +34,11 @@ class Crawler:
     """
     A class to crawl and extract data from ecommerce websites.
     """
+    headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)'
+            'AppleWebKit 537.36 (KHTML, like Gecko) Chrome',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;'
+            'q=0.9,image/webp,*/*;q=0.8'}
 
     def __init__(self, directory='images'):
         self.directory = directory
@@ -51,13 +56,7 @@ class Crawler:
         """
         try:
             session = requests.Session()
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)'
-                'AppleWebKit 537.36 (KHTML, like Gecko) Chrome',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;'
-                'q=0.9,image/webp,*/*;q=0.8'
-            }
-            req = session.get(url, headers=headers)
+            req = session.get(url, headers=self.headers)
             return BeautifulSoup(req.text, "html.parser")
         except requests.exceptions.RequestException:
             return None
@@ -106,7 +105,7 @@ class Crawler:
         if not os.path.exists(self.directory):
             os.makedirs(self.directory)
         try:
-            async with session.get(product.image_url) as response:
+            async with session.get(product.img_url) as response:
                 response.raise_for_status()
                 filename = os.path.join(self.directory,
                                     f'{rename(product)}')
@@ -117,10 +116,10 @@ class Crawler:
                             break
                         out_file.write(chunk)
         except Exception as e:
-            print(f"Error downloading {product.image_url}: {e}")
+            print(f"Error downloading {product.img_url}: {e}")
 
     async def download_images_async(self, products):
-        async with ClientSession() as session:
+        async with ClientSession(headers=self.headers) as session:
             tasks = []
             for product in products:
                 tasks.append(self.download_images(session, product))
@@ -144,7 +143,7 @@ class Crawler:
         title = all_desc.find('header', {'class': '-pvs -bb'}).find('h2').text
         kwargs['title'] = title
         desc = all_desc.find('div', {'class': 'markup -mhm -pvl -oxa -sc'}).get_text(separator='\n')
-        kwargs['features'] = desc.encode('utf-8').decode('unicode-escape')
+        kwargs['features'] = desc
         return kwargs
 
     def get_specs(self, obj):
@@ -156,7 +155,7 @@ class Crawler:
             features = [feat.get_text(separator='\n')
                         for feat in spec.find_all('ul')]
             kwargs['title'] = title
-            kwargs['specification'] = "".join(features.encode('utf-8').decode('unicode-escape'))
+            kwargs['specification'] = "".join(features)
         return kwargs
 
     def __new__(cls):
