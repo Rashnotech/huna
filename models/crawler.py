@@ -4,12 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 from urllib.parse import urlparse
-from model.products import Product
-from model.desc import Description
-from model.specs import Specification
-from model.category import Category
+from models.products import Product
+from models.desc import Description
+from models.specs import Specification
+from models.category import Category
 from aiohttp import ClientSession
-from model import storage
+from models import storage
 import asyncio
 import re
 import os

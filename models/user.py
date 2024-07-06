@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module for user of the app"""
-from model.base import Base, BaseModel
+from models.base import Base, BaseModel
 from sqlalchemy import Column, String, Boolean
 from hashlib import md5
 

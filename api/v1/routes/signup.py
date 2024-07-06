@@ -2,11 +2,11 @@
 """a module that handle registration"""
 from api.v1.routes import app_views
 from flask import jsonify, request, abort, current_app
-from model import storage
+from models import storage
 from os import getenv
 import asyncio
 from flask_mail import Message, Mail
-from model.user import User
+from models.user import User
 
 
 @app_views.route('/signup', methods=['POST'], strict_slashes=False)

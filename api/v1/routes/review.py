@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """a module that handle customer review"""
-from model import storage
-from model.reviews import Review
+from models import storage
+from models.reviews import Review
 from flask import jsonify, request, abort
 from api.v1.routes import app_views
-from model.user import User
-from model.products import Product
+from models.user import User
+from models.products import Product
 
 
 @app_views.route('/review', methods=['POST'], strict_slashes=False)

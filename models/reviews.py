@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module for product reviews"""
-from model.base import Base, BaseModel
+from models.base import Base, BaseModel
 from sqlalchemy import Column, ForeignKey, String, Integer, Text
 
 

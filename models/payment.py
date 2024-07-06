@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module that handles payment"""
-from model.base import BaseModel, Base
+from models.base import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Enum
 from sqlalchemy.orm import relationship
 

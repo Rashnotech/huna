@@ -38,7 +38,7 @@ class BaseModel:
             self.updated_at = datetime.now(timezone.utc)
 
     def __str__(self) -> str:
-        #returns a string representation
+        """returns a string representation"""
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
                                      self.__dict__)
 
@@ -56,13 +56,13 @@ class BaseModel:
         return new_dict
 
     def save(self) -> None:
-        from model import storage
+        from models import storage
         """updates the public instance attribute updated_at with current datetime"""
         self.updated_at = datetime.now(timezone.utc)
         storage.new(self)
         storage.save()
 
     def delete(self) -> None:
-        from model import storage
+        from models import storage
         """deletes the current instance from the storage"""
         storage.delete(self)

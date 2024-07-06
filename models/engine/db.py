@@ -2,16 +2,16 @@
 """a module that stores the database connection"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, Session
-from model.base import Base
-from model.products import Product
-from model.desc import Description
-from model.specs import Specification
-from model.user import User
-from model.order import Order, Item
-from model.payment import Payment
-from model.reviews import Review
+from models.base import Base
+from models.products import Product
+from models.desc import Description
+from models.specs import Specification
+from models.user import User
+from models.order import Order, Item
+from models.payment import Payment
+from models.reviews import Review
 from sys import modules
-from model.category import Category
+from models.category import Category
 
 classes = {'Product': Product, 'Description': Description,
         'Specification': Specification, 'User': User,

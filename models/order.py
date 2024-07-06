@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module that handle order"""
-from model.base import Base, BaseModel
+from models.base import Base, BaseModel
 from sqlalchemy import Column, JSON, String, ForeignKey, Integer, Float, Enum
 from enum import Enum as PythonEnum
 from sqlalchemy.orm import relationship

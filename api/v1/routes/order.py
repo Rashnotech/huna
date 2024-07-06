@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """a module that handle orders"""
-from model import storage
-from model.order import Order, Item
+from models import storage
+from models.order import Order, Item
 from flask import jsonify, abort, request
 from api.v1.routes import app_views
-from model.user import User
+from models.user import User
 from os import getenv
 import requests
 

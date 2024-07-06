@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """a module that handler background work"""
-from model.crawler import Crawler
-from model import storage
-from model.products import Product
+from models.crawler import Crawler
+from models import storage
+from models.products import Product
 import asyncio
 
 

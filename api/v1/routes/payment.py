@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """a module that handle payment"""
 from api.v1.routes import app_views
-from model import storage
+from models import storage
 from flask import request, jsonify, abort
-from model.payment import Payment
-from model.order import Order
+from models.payment import Payment
+from models.order import Order
 
 
 @app_views.route('/payments/<id>', methods=['POST'], strict_slashes=False)

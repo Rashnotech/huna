@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module for user endpoint"""
-from model.user import User
+from models.user import User
 from flask import request, jsonify, abort, current_app
 from api.v1.routes import app_views
 from flask_jwt_extended import create_access_token, jwt_required

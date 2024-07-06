@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """a module that models the product specification"""
-from model.base import Base, BaseModel
+from models.base import Base, BaseModel
 from sqlalchemy import Column, String, Text, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 

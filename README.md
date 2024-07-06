@@ -48,7 +48,7 @@ To set up the development environment, follow these steps:
 
 6. **Run the Flask server**:
    ```bash
-   flask run
+   python3 -m api.v1.app
    ```
 
 7. **Navigate to the frontend directory and install dependencies**:
@@ -61,6 +61,9 @@ To set up the development environment, follow these steps:
    ```bash
    npm run dev
    ```
+
+## API Endpoint
+
 
 ## License
 

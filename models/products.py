@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """a module that handles products modal"""
-from model.base import Base, BaseModel
+from models.base import Base, BaseModel
 from sqlalchemy import Column, String, Float, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 

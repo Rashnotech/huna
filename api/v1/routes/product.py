@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """a module that handles products """
-from model import storage
+from models import storage
 from flask import abort, jsonify, current_app
 from api.v1.routes import app_views
-from model.products import Product
-from model.specs import Specification
-from model.desc import Description
+from models.products import Product
+from models.specs import Specification
+from models.desc import Description
 
 
 @app_views.route('/products', methods=['GET'], strict_slashes=False)
